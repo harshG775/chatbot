@@ -18,10 +18,10 @@ recognition.lang = "en-US";
 recognition.addEventListener("result", async (e) => {
     try {
         const text = e.results[e.results.length - 1][0].transcript.trim();
-        logMessage(logContainer, `user:${text}`, "user");
+        logMessage(logContainer, `USER:${text}`, "user");
         const response = await getChatbotResponse(text);
         if (response) {
-            logMessage(logContainer, `Bot:${response}`, "bot");
+            logMessage(logContainer, `BOT:${response}`, "bot");
             // // Convert the response to speech
             // speak(response);
         } else {
