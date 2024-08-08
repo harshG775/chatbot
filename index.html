@@ -2,17 +2,24 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Voice-to-Voice Chatbot</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-    <h1>Voice-to-Voice Chatbot</h1>
-    <div id="log"></div>
-    <button id="start-btn">Start</button>
-    <button id="stop-btn">Stop</button>
-    <script type="module" src="/modules//chatbot.js"></script>
+    <main class="maxContainer">
+        <h1>Voice-to-Voice Chatbot</h1>
+        <p>Available in chrome only</p>
+        <div id="logContainer">
+        </div>
+        <nav class="nav">
+            <button id="start-btn">Start</button>
+            <button id="stop-btn">Stop</button>
+        </nav>
+    </main>
+    <script type="module" src="/app.js"></script>
 </body>
 
 </html>
