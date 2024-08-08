@@ -36,10 +36,13 @@ recognition.addEventListener("result", async ({ results }) => {
     }
 });
 
-recognition.start();
+// initial start recognition
+document.addEventListener("DOMContentLoaded", () => {
+    recognition.start();
+});
 // Optional: Automatically restart recognition on end if required
 recognition.onend = () => {
-    recognition.start();
+    setTimeout(() => recognition.start(), 1000);
     console.log("log", "Recognition ended.");
 };
 // Handle recognition errors
