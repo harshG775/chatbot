@@ -52,23 +52,12 @@
 }
 
 /*  */
-.nav {
-    border-top: 1px solid #555;
-    background-color: #222;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+.status-Speaking {
+    color: green;
+    font-weight: bold;
+}
 
-    padding: 1rem;
-}
-.nav button {
-    all: unset;
-    padding: 1rem;
-    background-color: #444;
-    border-radius: 0.4rem;
-    cursor: pointer;
-}
-.nav button:hover {
-    background-color: #333;
+.status-Silenced {
+    color: red;
+    font-weight: bold;
 }

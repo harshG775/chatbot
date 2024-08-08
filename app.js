@@ -1,46 +1,42 @@
 import { logMessage } from "./modules/log.js";
 import { getChatbotResponse } from "./modules/chatbotAPI.js";
-import { speak } from "./modules/speech.js";
-
 const logContainer = document.getElementById("logContainer");
-const startBtn = document.getElementById("start-btn");
-const stopBtn = document.getElementById("stop-btn");
+const status = document.getElementById("status");
 
 // Initialize speech recognition
 const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
-recognition.interimResults = false;
+recognition.interimResults = true;
 recognition.continuous = true;
 recognition.lang = "en-US";
 
 // Handle speech recognition results
-recognition.addEventListener("result", async (e) => {
-    try {
-        const text = e.results[e.results.length - 1][0].transcript.trim();
-        logMessage(logContainer, `USER:${text}`, "user");
-        const response = await getChatbotResponse(text);
-        if (response) {
-            logMessage(logContainer, `BOT:${response}`, "bot");
-            // // Convert the response to speech
-            // speak(response);
-        } else {
-            console.log(" No response received.", "bot");
+recognition.addEventListener("result", async ({ results }) => {
+    const isFinal = results[results.length - 1].isFinal;
+    if (isFinal) {
+        status.textContent = "Silenced";
+        status.className = "status-Silenced";
+        const arrayText = Array.from(results);
+        const text = arrayText[arrayText.length - 1][0].transcript;
+        try {
+            logMessage(logContainer, `USER:${text}`, "user");
+            const response = await getChatbotResponse(text);
+            if (response) {
+                logMessage(logContainer, `BOT:${response}`, "bot");
+            } else {
+                console.log(" No response received.", "bot");
+            }
+        } catch (error) {
+            console.log(error);
         }
-    } catch (error) {
-        console.log(error);
+    } else {
+        status.textContent = "Speaking...";
+        status.className = "status-Speaking";
     }
 });
 
-// Add event listeners for start and stop buttons
-startBtn.addEventListener("click", () => {
-    recognition.start();
-    console.log("log", "Conversation started.");
-});
-stopBtn.addEventListener("click", () => {
-    recognition.stop();
-    console.log("log", "Conversation stopped.");
-});
+recognition.start();
 // Optional: Automatically restart recognition on end if required
 recognition.onend = () => {
     recognition.start();
